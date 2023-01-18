@@ -1,5 +1,5 @@
 import { addDoc, collection, DocumentData, FirestoreDataConverter, limit, onSnapshot, orderBy, query, QueryDocumentSnapshot, Timestamp, WithFieldValue } from 'firebase/firestore';
-import { FormEvent, useEffect, useMemo, useRef, useState } from 'react';
+import { FormEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import firebase from "../../utils/firebase-app"
 import Button from '../Button/Button.lazy';
@@ -44,23 +44,33 @@ const ChatRoom = () => {
 
   const [messages] = useCollectionData(msgRef)
   const [formValue, setFormValue] = useState("")
+  const [mappedMessage, setMappedMessage] = useState<any[]>([])
   const bottomChatElement = useRef<HTMLDivElement>(null)
-  const chatElement = useRef<HTMLDivElement>(null)
-
-  // useEffect(() => {
-  //   // scroll on new message received
-  //   onSnapshot(collectionRef, () => {
-  //     setTimeout(() => {
-  //       bottomChatElement.current?.scrollIntoView({ behavior: "smooth" })
-  //     }, 50)
-  //   })
-  // }, [messages])
 
   useEffect(() => {
     setTimeout(() => {
       bottomChatElement.current?.scrollIntoView({ behavior: "smooth" })
     }, 50)
+
   }, [messages])
+
+  useEffect(() => {
+    const mapped: any[] = [];
+
+    messages?.map(message => {
+      if (!mapped.length)
+        mapped.push([message])
+      else
+        if (mapped.at(-1).at(-1)?.uid === message.uid)
+          mapped.at(-1).push(message)
+        else
+          mapped.push([message])
+    })
+
+    setMappedMessage(mapped)
+
+  }, [messages])
+
 
   const sendMessage = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -82,13 +92,13 @@ const ChatRoom = () => {
 
   return (
     <>
-      <main ref={chatElement}>
-        {messages && messages.map(msg => <ChatMessage key={msg.id} message={msg} />)}
+      <main>
+        {messages && mappedMessage.map(msg => <ChatMessage key={msg[0].id} message={msg} />)}
         <div ref={bottomChatElement}></div>
       </main>
 
       <form onSubmit={sendMessage} className={styles.form}>
-        <input type="text" className={styles.input} value={formValue} onChange={e => setFormValue(e.target.value)} />
+        <textarea cols={30} rows={1} placeholder="type your chat..." className={styles.input} onChange={e => setFormValue(e.target.value)} value={formValue}></textarea>
         <Button type='submit' disabled={!formValue}>Send</Button>
       </form>
     </>

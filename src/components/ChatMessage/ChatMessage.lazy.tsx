@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react';
+import { lazy, Suspense } from 'react';
 
 import { ChatMessageProps } from './ChatMessage';
 const LazyChatMessage = lazy(() => import('./ChatMessage'));

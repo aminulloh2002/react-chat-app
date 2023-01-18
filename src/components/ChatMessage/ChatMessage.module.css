@@ -62,7 +62,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 1.5rem;
+    /* border-radius: 1.5rem; */
 }
 
 .messageText {
@@ -72,14 +72,8 @@
 
 .textTime {
     display: flex;
-    /* flex-direction: column; */
-    /* justify-content: center; */
     align-items: flex-start;
 }
-
-/* .messageLeft>.messageCard>.textTime {
-    align-items: flex-start;
-} */
 
 .messageRight>.messageCard>.textTime {
     flex-direction: row-reverse;
@@ -88,4 +82,48 @@
 .messageTime {
     color: #fff;
     font-size: .5rem;
+}
+
+.groupedChat>.messageBox:not(:last-child)>.messagePic {
+    visibility: hidden;
+}
+
+.groupedChat>.messageBox:not(:first-child)>.messageCard>.messageName {
+    visibility: hidden;
+}
+
+.groupedChat>.messageBox:not(:first-child)>.messageCard>.textTime>.messageTime {
+    visibility: hidden;
+}
+
+.groupedChat>.messageBox:not(:first-child) {
+    margin-top: -.8rem;
+}
+
+.groupedChat>.messageRight.messageBox:first-child>.messageCard>.textTime>.messageTextBox {
+    border-radius: 1.5rem 1.5rem 0 1.5rem;
+}
+
+.groupedChat>.messageRight.messageBox:not(:first-child):not(:last-child)>.messageCard>.textTime>.messageTextBox {
+    border-radius: 1.5rem 0 0 1.5rem;
+}
+
+.groupedChat>.messageRight.messageBox:last-child>.messageCard>.textTime>.messageTextBox {
+    border-radius: 1.5rem 0 1.5rem 1.5rem;
+}
+
+.groupedChat>.messageLeft.messageBox:first-child>.messageCard>.textTime>.messageTextBox {
+    border-radius: 1.5rem 1.5rem 1.5rem 0;
+}
+
+.groupedChat>.messageLeft.messageBox:not(:first-child):not(:last-child)>.messageCard>.textTime>.messageTextBox {
+    border-radius: 0 1.5rem 1.5rem 0;
+}
+
+.groupedChat>.messageLeft.messageBox:last-child>.messageCard>.textTime>.messageTextBox {
+    border-radius: 0 1.5rem 1.5rem 1.5rem;
+}
+
+.newLine {
+    white-space: pre-line;
 }
