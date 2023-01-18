@@ -14,12 +14,12 @@
     margin-right: 50px;
 }
 
-.messageRight>.messageCard>.messageTextBox {
+.messageRight>.messageCard>.textTime>.messageTextBox {
     background-color: rgb(0, 132, 255);
     margin-left: auto;
 }
 
-.messageLeft>.messageCard>.messageTextBox {
+.messageLeft>.messageCard>.textTime>.messageTextBox {
     background-color: #3E4042;
 }
 
@@ -68,4 +68,24 @@
 .messageText {
     margin: 8px 10px;
     color: white;
+}
+
+.textTime {
+    display: flex;
+    /* flex-direction: column; */
+    /* justify-content: center; */
+    align-items: flex-start;
+}
+
+/* .messageLeft>.messageCard>.textTime {
+    align-items: flex-start;
+} */
+
+.messageRight>.messageCard>.textTime {
+    flex-direction: row-reverse;
+}
+
+.messageTime {
+    color: #fff;
+    font-size: .5rem;
 }

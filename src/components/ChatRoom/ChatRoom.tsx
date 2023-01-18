@@ -28,7 +28,7 @@ const ChatRoom = () => {
         photoURL: data.photoURL,
         uid: data.uid,
         name: data.name,
-        createdAt: data.created
+        createdAt: data.createdAt
       };
     },
   }
