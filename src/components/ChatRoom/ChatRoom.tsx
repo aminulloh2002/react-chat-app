@@ -45,14 +45,22 @@ const ChatRoom = () => {
   const [messages] = useCollectionData(msgRef)
   const [formValue, setFormValue] = useState("")
   const bottomChatElement = useRef<HTMLDivElement>(null)
+  const chatElement = useRef<HTMLDivElement>(null)
+
+  // useEffect(() => {
+  //   // scroll on new message received
+  //   onSnapshot(collectionRef, () => {
+  //     setTimeout(() => {
+  //       bottomChatElement.current?.scrollIntoView({ behavior: "smooth" })
+  //     }, 50)
+  //   })
+  // }, [messages])
 
   useEffect(() => {
-    onSnapshot(collectionRef, () => {
-      if (bottomChatElement.current) {
-        bottomChatElement.current.scrollIntoView({ behavior: "smooth" })
-      }
-    })
-  }, [])
+    setTimeout(() => {
+      bottomChatElement.current?.scrollIntoView({ behavior: "smooth" })
+    }, 50)
+  }, [messages])
 
   const sendMessage = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -74,7 +82,7 @@ const ChatRoom = () => {
 
   return (
     <>
-      <main>
+      <main ref={chatElement}>
         {messages && messages.map(msg => <ChatMessage key={msg.id} message={msg} />)}
         <div ref={bottomChatElement}></div>
       </main>
@@ -88,5 +96,3 @@ const ChatRoom = () => {
 }
 
 export default ChatRoom;
-
-
