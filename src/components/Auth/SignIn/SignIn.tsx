@@ -12,7 +12,9 @@ const SignIn: FC<AuthSignInProps> = () => {
     auth.signInWithPopup(provider)
   }
   return (
-    <Button onClick={signInWithGoogle}>Sign in with Google</Button>
+    <div className={styles.container}>
+      <Button onClick={signInWithGoogle}>Sign in</Button>
+    </div>
   )
 }
 

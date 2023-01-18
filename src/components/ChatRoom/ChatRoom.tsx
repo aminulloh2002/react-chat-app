@@ -1,18 +1,10 @@
 import { addDoc, collection, DocumentData, FirestoreDataConverter, limit, onSnapshot, orderBy, query, QueryDocumentSnapshot, Timestamp, WithFieldValue } from 'firebase/firestore';
-import { FormEvent, useMemo, useRef, useState } from 'react';
+import { FormEvent, useEffect, useMemo, useRef, useState } from 'react';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import firebase from "../../utils/firebase-app"
 import Button from '../Button/Button.lazy';
 import ChatMessage from '../ChatMessage/ChatMessage.lazy';
 import styles from './ChatRoom.module.css';
-
-// interface ChatRoomProps {}
-
-// const ChatRoom: FC<ChatRoomProps> = () => (
-//   <div className={styles.ChatRoom}>
-//     ChatRoom Component
-//   </div>
-// );
 
 const ChatRoom = () => {
   type Message = {
@@ -54,11 +46,13 @@ const ChatRoom = () => {
   const [formValue, setFormValue] = useState("")
   const bottomChatElement = useRef<HTMLDivElement>(null)
 
-  onSnapshot(collectionRef, () => {
-    if (bottomChatElement.current) {
-      bottomChatElement.current.scrollIntoView({ behavior: "smooth" })
-    }
-  })
+  useEffect(() => {
+    onSnapshot(collectionRef, () => {
+      if (bottomChatElement.current) {
+        bottomChatElement.current.scrollIntoView({ behavior: "smooth" })
+      }
+    })
+  }, [])
 
   const sendMessage = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -85,8 +79,8 @@ const ChatRoom = () => {
         <div ref={bottomChatElement}></div>
       </main>
 
-      <form onSubmit={sendMessage}>
-        <input type="text" value={formValue} onChange={e => setFormValue(e.target.value)} />
+      <form onSubmit={sendMessage} className={styles.form}>
+        <input type="text" className={styles.input} value={formValue} onChange={e => setFormValue(e.target.value)} />
         <Button type='submit' disabled={!formValue}>Send</Button>
       </form>
     </>
