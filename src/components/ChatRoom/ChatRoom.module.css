@@ -3,6 +3,7 @@ main {
     flex-direction: column;
     flex: 1;
     overflow-y: auto;
+    /* the height 100% makes the chat section didnt collapse */
     height: 100%;
     background-color: #242323;
     gap: 10px;

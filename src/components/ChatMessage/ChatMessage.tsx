@@ -1,13 +1,11 @@
 import { Timestamp } from 'firebase/firestore';
 import { FC } from 'react';
-import firebase from '../../utils/firebase-app'
+import { auth } from '../../utils/firebase-app'
 import styles from './ChatMessage.module.css';
 
 export interface ChatMessageProps { message: { text: string, uid: string, photoURL: string, name: string, createdAt: Timestamp }[] }
 
 const ChatMessage: FC<ChatMessageProps> = (props: ChatMessageProps) => {
-
-  const auth = firebase.auth()
 
   const { uid } = props.message[0]
 

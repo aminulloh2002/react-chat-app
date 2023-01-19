@@ -1,70 +1,38 @@
-import { addDoc, collection, DocumentData, FirestoreDataConverter, limit, onSnapshot, orderBy, query, QueryDocumentSnapshot, Timestamp, WithFieldValue } from 'firebase/firestore';
-import { FormEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { FormEvent, useEffect, useRef, useState } from 'react';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
-import firebase from "../../utils/firebase-app"
+import firebase, { auth, insertMessage, msgRef } from "../../utils/firebase-app"
 import Button from '../Button/Button.lazy';
 import ChatMessage from '../ChatMessage/ChatMessage.lazy';
 import styles from './ChatRoom.module.css';
 
 const ChatRoom = () => {
-  type Message = {
-    id: string,
-    text: string,
-    photoURL: string,
-    uid: string,
-    name: string,
-    createdAt: Timestamp,
-  };
-
-  const messageConverter: FirestoreDataConverter<Message> = {
-    toFirestore(message: WithFieldValue<Message>): DocumentData {
-      return { text: message.text, photoURL: message.photoURL, uid: message.uid, name: message.name, createdAt: firebase.firestore.FieldValue.serverTimestamp() }
-    },
-    fromFirestore(snapshot: QueryDocumentSnapshot<DocumentData>): Message {
-      const data = snapshot.data()
-      return {
-        id: snapshot.id,
-        text: data.text,
-        photoURL: data.photoURL,
-        uid: data.uid,
-        name: data.name,
-        createdAt: data.createdAt
-      };
-    },
-  }
-
-  const firestore = firebase.firestore()
-  const auth = firebase.auth()
-
-  const collectionRef = collection(firestore, 'messages')
-
-  const q = query(collectionRef, orderBy("createdAt", "asc"), limit(50))
-
-  const msgRef = useMemo(() => q.withConverter(messageConverter), []);
-
-  const [messages] = useCollectionData(msgRef)
+  const [messages] = useCollectionData(msgRef())
   const [formValue, setFormValue] = useState("")
   const [mappedMessage, setMappedMessage] = useState<any[]>([])
   const bottomChatElement = useRef<HTMLDivElement>(null)
 
+  const scrollToBottomChat = () => {
+    bottomChatElement.current?.scrollIntoView({ behavior: "smooth" })
+  }
+
   useEffect(() => {
     setTimeout(() => {
-      bottomChatElement.current?.scrollIntoView({ behavior: "smooth" })
-    }, 50)
+      console.log("scroll down run here")
+      scrollToBottomChat()
+    }, 250)
+  }, [])
 
+  useEffect(() => {
+    setTimeout(() => {
+      scrollToBottomChat()
+    }, 50)
   }, [messages])
 
   useEffect(() => {
     const mapped: any[] = [];
 
     messages?.map(message => {
-      if (!mapped.length)
-        mapped.push([message])
-      else
-        if (mapped.at(-1).at(-1)?.uid === message.uid)
-          mapped.at(-1).push(message)
-        else
-          mapped.push([message])
+      mapped.length && (mapped.at(-1).at(-1)?.uid === message.uid) ? mapped.at(-1).push(message) : mapped.push([message])
     })
 
     setMappedMessage(mapped)
@@ -78,15 +46,16 @@ const ChatRoom = () => {
 
       const { uid, photoURL, displayName } = auth.currentUser
 
-      await addDoc(collectionRef, {
+      await insertMessage({
         text: formValue,
         uid,
         photoURL,
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
         name: displayName
       })
+
       setFormValue("")
-      bottomChatElement.current?.scrollIntoView({ behavior: 'smooth' })
+      scrollToBottomChat()
     }
   }
 

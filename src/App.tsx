@@ -1,12 +1,10 @@
 import './App.css'
 
-import firebase from './utils/firebase-app'
+import { auth } from './utils/firebase-app'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import ChatRoom from './components/ChatRoom/ChatRoom.lazy'
 import SignIn from './components/Auth/SignIn/SignIn'
 import Header from './components/Header/Header.lazy'
-
-const auth = firebase.auth()
 
 function App() {
   const [user] = useAuthState(auth as any)
