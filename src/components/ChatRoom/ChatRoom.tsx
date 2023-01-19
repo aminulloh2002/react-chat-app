@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useRef, useState } from 'react';
+import { FormEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import firebase, { auth, insertMessage, msgRef } from "../../utils/firebase-app"
 import Button from '../Button/Button.lazy';
@@ -16,19 +16,6 @@ const ChatRoom = () => {
   }
 
   useEffect(() => {
-    setTimeout(() => {
-      console.log("scroll down run here")
-      scrollToBottomChat()
-    }, 250)
-  }, [])
-
-  useEffect(() => {
-    setTimeout(() => {
-      scrollToBottomChat()
-    }, 50)
-  }, [messages])
-
-  useEffect(() => {
     const mapped: any[] = [];
 
     messages?.map(message => {
@@ -37,11 +24,19 @@ const ChatRoom = () => {
 
     setMappedMessage(mapped)
 
+    setTimeout(() => {
+      scrollToBottomChat()
+    }, 50)
+
   }, [messages])
 
+  const onKeyDownListener = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter") sendMessage()
+  }
 
-  const sendMessage = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+
+  const sendMessage = async (e?: FormEvent<HTMLFormElement>) => {
+    e?.preventDefault()
     if (auth.currentUser) {
 
       const { uid, photoURL, displayName } = auth.currentUser
@@ -67,7 +62,7 @@ const ChatRoom = () => {
       </main>
 
       <form onSubmit={sendMessage} className={styles.form}>
-        <textarea cols={30} rows={1} placeholder="type your chat..." className={styles.input} onChange={e => setFormValue(e.target.value)} value={formValue}></textarea>
+        <textarea cols={30} rows={1} placeholder="type your chat..." className={styles.input} onKeyDown={onKeyDownListener} onChange={e => setFormValue(e.target.value)} value={formValue}></textarea>
         <Button type='submit' disabled={!formValue}>Send</Button>
       </form>
     </>
