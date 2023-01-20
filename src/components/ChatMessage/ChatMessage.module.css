@@ -127,3 +127,31 @@
 .newLine {
     white-space: pre-line;
 }
+
+.groupedChat:nth-last-child(2)>.messageLeft {
+    animation: ltr 2s;
+}
+
+.groupedChat:nth-last-child(2)>.messageRight {
+    animation: rtl 2s;
+}
+
+@keyframes rtl {
+    0% {
+        margin-right: -75px;
+    }
+
+    100% {
+        margin-right: 0;
+    }
+}
+
+@keyframes ltr {
+    0% {
+        margin-left: -75px;
+    }
+
+    100% {
+        margin-left: 0;
+    }
+}

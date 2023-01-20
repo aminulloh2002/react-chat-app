@@ -1,6 +1,5 @@
 import { FC } from 'react';
-import styles from './Auth/SignOut.module.css';
-import firebase, { auth } from '../../../utils/firebase-app';
+import { auth } from '../../../utils/firebase-app';
 import Button from '../../Button/Button.lazy';
 interface SignOutProps { }
 

@@ -12,5 +12,19 @@
 }
 
 h3 {
-    margin-bottom: 0;
+    animation: ltr 1s;
+}
+
+.signOut {
+    animation: rtl 1s;
+}
+
+@keyframes ltr {
+    0% {
+        margin-left: -75px;
+    }
+
+    100% {
+        margin-left: 0;
+    }
 }

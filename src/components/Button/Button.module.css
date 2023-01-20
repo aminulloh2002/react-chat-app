@@ -1,7 +1,6 @@
 .Button {
     min-width: 80px;
     max-width: 80px;
-    /* font-size: .7rem; */
     max-height: 80px;
     background-color: rgb(0, 132, 255);
     padding: .5rem;
@@ -10,4 +9,11 @@
     border: 0;
     outline: 0;
     cursor: pointer;
+    transition: all 1s;
+}
+
+.Button:disabled {
+    background-color: rgb(1, 96, 185);
+    cursor: auto;
+    transition: all 1s;
 }
