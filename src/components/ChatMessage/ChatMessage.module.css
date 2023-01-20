@@ -129,11 +129,11 @@
 }
 
 .groupedChat:nth-last-child(2)>.messageLeft {
-    animation: ltr 2s;
+    animation: ltr 1s;
 }
 
 .groupedChat:nth-last-child(2)>.messageRight {
-    animation: rtl 2s;
+    animation: rtl 1s;
 }
 
 @keyframes rtl {

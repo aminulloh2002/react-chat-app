@@ -1,32 +1,12 @@
-main {
+.main {
     display: flex;
     flex-direction: column;
     flex: 1;
-    /* overflow-y: auto; */
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
     /* the height 100% makes the chat section didnt collapse */
     height: 100%;
     background-color: #242323;
     gap: 10px;
     padding-top: 20px;
-}
-
-.form {
-    background-color: #181717;
-    display: flex;
-    padding: 15px;
-    gap: 10px;
-}
-
-.input {
-    font-family: sans-serif;
-    font-size: 1.2rem;
-    padding-left: .5rem;
-    border: none;
-    width: 100%;
-    color: #fff;
-    outline: none;
-    background-color: #494949;
-    border-radius: 3px;
-    padding-top: .2rem;
 }
