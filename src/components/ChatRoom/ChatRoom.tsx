@@ -23,9 +23,13 @@ const ChatRoom = () => {
 
     setMappedMessage(mapped)
 
-    setTimeout(() => {
+    const timeout = setTimeout(() => {
       scrollToBottomChat()
-    }, 50)
+    }, 500)
+
+    return () => {
+      clearTimeout(timeout)
+    }
 
   }, [messages])
 
