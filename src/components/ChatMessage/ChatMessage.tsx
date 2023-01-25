@@ -16,7 +16,7 @@ const ChatMessage: FC<ChatMessageProps> = (props: ChatMessageProps) => {
       {props.message.map(msg => (
         <div key={msg.uid + Math.random()} className={`${styles.messageBox} ${messageClass}`}>
           <div className={styles.messagePic}>
-            <img src={msg.photoURL} referrerPolicy="no-referrer" alt="" />
+            <img src={msg.photoURL} referrerPolicy="no-referrer" alt="img" />
           </div>
           <span className={styles.messageCard}>
             <span className={styles.messageName}>{msg.name}</span>

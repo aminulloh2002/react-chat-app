@@ -44,7 +44,7 @@ const auth = firebase.auth()
 
 const collectionRef = collection(firestore, 'messages')
 
-const q = query(collectionRef, orderBy("createdAt", "asc"), limit(50))
+const q = query(collectionRef, orderBy("createdAt", "desc"), limit(50))
 
 const msgRef = () => q.withConverter(messageConverter)
 

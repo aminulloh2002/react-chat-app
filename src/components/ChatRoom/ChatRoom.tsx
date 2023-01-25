@@ -17,7 +17,9 @@ const ChatRoom = () => {
   useEffect(() => {
     const mapped: any[] = [];
 
-    messages?.map(message => {
+    const reversedMessages = messages?.reverse() ?? []
+
+    reversedMessages?.map(message => {
       mapped.length && (mapped.at(-1).at(-1)?.uid === message.uid) ? mapped.at(-1).push(message) : mapped.push([message])
     })
 

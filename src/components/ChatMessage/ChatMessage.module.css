@@ -128,30 +128,34 @@
     white-space: pre-line;
 }
 
-.groupedChat:nth-last-child(2)>.messageLeft {
+.groupedChat:nth-last-child(2)>.messageLeft:last-child {
     animation: ltr 1s;
 }
 
-.groupedChat:nth-last-child(2)>.messageRight {
+.groupedChat:nth-last-child(2)>.messageRight:last-child {
     animation: rtl 1s;
 }
 
 @keyframes rtl {
     0% {
+        opacity: 0;
         margin-right: -75px;
     }
 
     100% {
         margin-right: 0;
+        opacity: 1;
     }
 }
 
 @keyframes ltr {
     0% {
+        opacity: 0;
         margin-left: -75px;
     }
 
     100% {
         margin-left: 0;
+        opacity: 1;
     }
 }

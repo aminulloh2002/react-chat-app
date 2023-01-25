@@ -12,7 +12,7 @@ const ChatForm: FC<ChatFormProps> = (props) => {
 
   const sendMessage = async (e?: FormEvent<HTMLFormElement>) => {
     e?.preventDefault()
-    if (auth.currentUser) {
+    if (auth.currentUser && formValue.trim().length) {
 
       const { uid, photoURL, displayName } = auth.currentUser
 
@@ -24,13 +24,16 @@ const ChatForm: FC<ChatFormProps> = (props) => {
         name: displayName
       })
 
-      setFormValue("")
       props.scrollToBottom()
     }
+    setFormValue("")
   }
 
-  const onKeyDownListener = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === "Enter") sendMessage()
+  const onKeyDownListener = async (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault()
+      await sendMessage()
+    }
   }
 
 
