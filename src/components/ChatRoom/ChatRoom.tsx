@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { msgRef } from "../../utils/firebase-app"
 import ChatForm from '../ChatForm/ChatForm.lazy';
@@ -10,9 +10,9 @@ const ChatRoom = () => {
   const [mappedMessage, setMappedMessage] = useState<any[]>([])
   const bottomChatElement = useRef<HTMLDivElement>(null)
 
-  const scrollToBottomChat = () => {
+  const scrollToBottomChat = useCallback(() => {
     bottomChatElement.current?.scrollIntoView({ behavior: "smooth" })
-  }
+  }, [])
 
   useEffect(() => {
     const mapped: any[] = [];
@@ -27,13 +27,25 @@ const ChatRoom = () => {
 
     const timeout = setTimeout(() => {
       scrollToBottomChat()
+    }, 10)
+
+    return () => {
+      clearTimeout(timeout)
+    }
+
+  }, [messages, scrollToBottomChat])
+
+  useEffect(() => {
+
+    const timeout = setTimeout(() => {
+      scrollToBottomChat()
     }, 500)
 
     return () => {
       clearTimeout(timeout)
     }
 
-  }, [messages])
+  }, [scrollToBottomChat])
 
   return (
     <>

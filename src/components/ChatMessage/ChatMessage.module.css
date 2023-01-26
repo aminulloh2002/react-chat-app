@@ -51,6 +51,7 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+    width: 32px;
 }
 
 .messagePic>img {
@@ -143,7 +144,7 @@
     }
 
     100% {
-        margin-right: 0;
+        margin-right: .5rem;
         opacity: 1;
     }
 }
@@ -155,7 +156,7 @@
     }
 
     100% {
-        margin-left: 0;
+        margin-left: .5rem;
         opacity: 1;
     }
 }
